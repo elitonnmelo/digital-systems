@@ -75,7 +75,16 @@ architecture Behavioral of testbench is
             q: out std_logic
         );    
     end component;
-    
+
+    --DRIVER
+    component driver is
+        port(
+            clock: in std_logic;
+            a: in std_logic;
+            q: inout std_logic
+        );    
+    end component;
+        
     signal clock: std_logic := '0';
     signal a,b: std_logic := '0';
     signal q_and: std_logic;
@@ -85,6 +94,7 @@ architecture Behavioral of testbench is
     signal q_nor: std_logic;
     signal q_nand: std_logic;
     signal q_xnor: std_logic;
+    signal q_driver: std_logic;
     constant clock_periodo:time:= 100 ns;
         
 begin
@@ -97,6 +107,7 @@ begin
     DUT5: entity work.gate_nor port map(clock,a,b,q_nor);
     DUT6: entity work.gate_nand port map(clock,a,b,q_nand);
     DUT7: entity work.gate_xnor port map(clock,a,b,q_xnor);
+    DUT8: entity work.driver port map(clock,a,q_driver);
 
     estimulos:process
     begin
