@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 03/12/2024 11:06:56 PM
+-- Create Date: 03/15/2024 03:06:31 PM
 -- Design Name: 
--- Module Name: half_adder - Behavioral
+-- Module Name: fsm_mealy - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,14 +31,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity half_adder is
-    Port ( a : in STD_LOGIC;
-           b : in STD_LOGIC;
-           s : out STD_LOGIC;
-           c : out STD_LOGIC);
-end half_adder;
+entity fsm_mealy is
+    Port ( clock : in STD_LOGIC;
+           rst : in STD_LOGIC;
+           w : in STD_LOGIC;
+           z : out STD_LOGIC);
+end fsm_mealy;
 
-architecture Behavioral of half_adder is
+architecture Behavioral of fsm_mealy is
 
 begin
 
