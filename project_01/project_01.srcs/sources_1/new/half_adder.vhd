@@ -46,7 +46,7 @@ begin
     begin
     wait until clk'event and clk='1';        
         if (a = '0' and b = '0') then
-            q <= '1';
+            q <= '0';
             c <= '0';
         elsif (a = '0' and b = '1') then
             q <= '1';
