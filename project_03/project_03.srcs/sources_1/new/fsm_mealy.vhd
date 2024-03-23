@@ -1,46 +1,57 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 03/15/2024 03:06:31 PM
--- Design Name: 
--- Module Name: fsm_mealy - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+use ieee.numeric_std.all;
 
 entity fsm_mealy is
-    Port ( clock : in STD_LOGIC;
-           rst : in STD_LOGIC;
-           w : in STD_LOGIC;
-           z : out STD_LOGIC);
+--generic(clock_frequencyHz : integer := 50e6);
+  Port ( 
+    rst   : in std_logic;
+    clock : in std_logic;    
+    w     : in std_logic;
+    z     : out std_logic
+  );
 end fsm_mealy;
 
-architecture Behavioral of fsm_mealy is
-
+architecture rtl of fsm_mealy is
+    type estados is (A, B);
+    signal y : estados;    
 begin
+    process(clock, rst, y)
+    begin
+        if(rising_edge(clock))then
+            if(rst = '1')then
+                y <= A;
+               -- z <= '0';
+            
+            else--(clock'event and clock = '1')then
+                case y is
+                    when A =>
+                        if(w = '1')then
+                            y <= B;
+                         --   z <= '0';
+                        end if;
+                    when B =>          
+                        if(w = '0')then
+                            y <= A;
+                           -- z <= '0';
+                        else
+                            y <= B;
+                            --z <= '1';
+                        end if;
+                end case;
+            end if;
+        end if;
+    -- z <= '1' when y = C else '0';
+    end process;
+    process(clock, rst, y, w)
+        begin
+        case y is
+            when A =>
+                z <= '0';
+            when B =>
+                z <= w;
+        end case;
+     end process;
 
-
-end Behavioral;
+end rtl;

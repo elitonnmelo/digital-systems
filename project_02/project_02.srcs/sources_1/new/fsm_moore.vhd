@@ -21,31 +21,42 @@ begin
         if(rising_edge(clock))then
             if(rst = '1')then
                 y <= A;
-                z <= '0';
+                --z <= '0';
             
             else--(clock'event and clock = '1')then
                 case y is
                     when A =>
-                        z <= '0';
+                        --z <= '0';
                         if(w = '1')then
                             y <= B;
                         end if;
                     when B =>
-                        z <= '0';
+                        --z <= '0';
                         if(w = '0')then
                             y <= A;
                         else
                             y <= C;
                         end if;
                     when C =>
-                        z <= '1';
+                        --z <= '1';
                         if(w = '0')then
                             y <= A;
                         end if;
                 end case;
             end if;
         end if;
-    -- <= '1' when y = C else '0';
+    --z <= '1' when y = C else '0';
     end process;
     --z <= '1' when y = C else '0';
+    process(y)
+    begin
+        case y is 
+            when A => 
+                z <= '0';
+            when B =>
+                z <= '0';
+            when C =>
+                z <= '1';
+        end case;
+    end process;
 end rtl;
