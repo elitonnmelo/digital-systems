@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_cpu_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_cpu" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="368.501 ns"></ZoomEndTime>
+      <Cursor1Time time="300.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="177"></NameColumnWidth>
+      <ValueColumnWidth column_width="85"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="21" />
+   <wvobject type="logic" fp_name="/tb_cpu/tb_clk">
+      <obj_property name="ElementShortName">tb_clk</obj_property>
+      <obj_property name="ObjectShortName">tb_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_cpu/tb_rst">
+      <obj_property name="ElementShortName">tb_rst</obj_property>
+      <obj_property name="ObjectShortName">tb_rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_cpu/ROM_en">
+      <obj_property name="ElementShortName">ROM_en</obj_property>
+      <obj_property name="ObjectShortName">ROM_en</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/ROM_addr">
+      <obj_property name="ElementShortName">ROM_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ROM_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/Control_Unit_0/IR_data">
+      <obj_property name="ElementShortName">IR_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">IR_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/MEMORY_RAM/ram_din">
+      <obj_property name="ElementShortName">ram_din[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram_din[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/MEMORY_RAM/ram_dout">
+      <obj_property name="ElementShortName">ram_dout[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram_dout[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/ram_addr">
+      <obj_property name="ElementShortName">ram_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_cpu/RAM_we">
+      <obj_property name="ElementShortName">RAM_we</obj_property>
+      <obj_property name="ObjectShortName">RAM_we</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r0">
+      <obj_property name="ElementShortName">dbg_r0[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r0[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r1">
+      <obj_property name="ElementShortName">dbg_r1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r1[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r2">
+      <obj_property name="ElementShortName">dbg_r2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r2[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r3">
+      <obj_property name="ElementShortName">dbg_r3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r3[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r4">
+      <obj_property name="ElementShortName">dbg_r4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r4[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r5">
+      <obj_property name="ElementShortName">dbg_r5[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r5[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r6">
+      <obj_property name="ElementShortName">dbg_r6[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r6[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_r7">
+      <obj_property name="ElementShortName">dbg_r7[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_r7[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_ir">
+      <obj_property name="ElementShortName">dbg_ir[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_ir[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/dbg_state">
+      <obj_property name="ElementShortName">dbg_state[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dbg_state[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_cpu/N">
+      <obj_property name="ElementShortName">N</obj_property>
+      <obj_property name="ObjectShortName">N</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_cpu/PERIOD">
+      <obj_property name="ElementShortName">PERIOD</obj_property>
+      <obj_property name="ObjectShortName">PERIOD</obj_property>
+   </wvobject>
+</wave_config>
