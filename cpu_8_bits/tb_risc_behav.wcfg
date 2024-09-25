@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_risc_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_risc" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="475.001 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="164"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="13" />
+   <wvobject type="logic" fp_name="/tb_risc/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_risc/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/phase">
+      <obj_property name="ElementShortName">phase[2:0]</obj_property>
+      <obj_property name="ObjectShortName">phase[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/data">
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_pc_out">
+      <obj_property name="ElementShortName">s_pc_out[4:0]</obj_property>
+      <obj_property name="ObjectShortName">s_pc_out[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_in_a">
+      <obj_property name="ElementShortName">s_in_a[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_in_a[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_in_b">
+      <obj_property name="ElementShortName">s_in_b[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_in_b[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_alu_out">
+      <obj_property name="ElementShortName">s_alu_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_alu_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_op_code">
+      <obj_property name="ElementShortName">s_op_code[2:0]</obj_property>
+      <obj_property name="ObjectShortName">s_op_code[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_addr">
+      <obj_property name="ElementShortName">s_addr[4:0]</obj_property>
+      <obj_property name="ObjectShortName">s_addr[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_data">
+      <obj_property name="ElementShortName">s_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_phase">
+      <obj_property name="ElementShortName">s_phase[2:0]</obj_property>
+      <obj_property name="ObjectShortName">s_phase[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_risc/dut/s_driver_inst">
+      <obj_property name="ElementShortName">s_driver_inst[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_driver_inst[7:0]</obj_property>
+   </wvobject>
+</wave_config>

@@ -1,0 +1,8 @@
+# Ignorar pastas com extensões específicas
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.xpr/
+
+

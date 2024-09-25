@@ -17,24 +17,18 @@ Generic (N:integer :=16);
          ula_op:in std_logic_vector(3 downto 0);
          
          --Memória
-         ram_din: out std_logic_vector(N-1 downto 0);
-         ram_dout: in std_logic_vector(N-1 downto 0);
+         ram_din: in std_logic_vector(N-1 downto 0);
+         ram_dout: out std_logic_vector(N-1 downto 0);
          ram_addr: out std_logic_vector(N-1 downto 0);
          
          --Imediato
-         immediate: in std_logic_vector(N-1 downto 0);
-         
-         --Flagss
-         zero: out std_logic;
-         carry: out std_logic;         
+         immediate: in std_logic_vector(N-1 downto 0);         
          
          --RF Source
          RF_source: in std_logic_vector(1 downto 0);
          
          --Mux
          RAM_sel :in std_logic;
-         io_en :in std_logic;
-         io_dout : in std_logic_vector(N-1 downto 0);
          
          --Debug
          dbg_r0: out std_logic_vector(N-1 downto 0);
@@ -59,9 +53,6 @@ signal s_RF_din: std_logic_vector(N-1 downto 0) := (others =>'0');
 signal s_Rm_dout:  std_logic_vector(N-1 downto 0);
 signal s_Rn_dout:  std_logic_vector(N-1 downto 0);
 
-signal s_immediate:  std_logic_vector(N-1 downto 0);
-signal s_zero:  std_logic;
-signal s_carry: std_logic;   
 
 --ULA
 --signal s_rm_to_ula_A: std_logic_vector(N-1 downto 0);
@@ -74,9 +65,6 @@ ULA: entity work.ula
      generic map(N => 16)
      port map( A => s_Rm_dout,
                B => s_Rn_dout,
-               Immed => immediate,
-               zero => zero,
-               carry => carry,
                Q => s_ula_Q_to_RF_source,
                op => ula_op);
 
@@ -107,8 +95,7 @@ RAM_Mux: entity work.mux_2x1
     port map ( sel => RAM_sel,
            I0  => s_Rn_dout,
            I1  => immediate,
-           O0  => ram_din);
-
+           O0  => ram_dout);
 
 Register_file:
 with RF_source select
@@ -119,8 +106,8 @@ s_RF_din <= s_Rm_dout               when "00", --Rd = Rm
             s_RF_din                when others;
             
 
-s_mem_dout_to_RF_source <= io_dout when io_en= '1' else ram_dout;
-
+s_mem_dout_to_RF_source <= ram_din;
 ram_addr <= s_Rm_dout;
 
 end Behavioral;
+

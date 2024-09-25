@@ -1,16 +1,12 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
-use IEEE.NUMERIC_STD.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
+--use IEEE.NUMERIC_STD.ALL;
 
 entity ula is
   Generic (N:integer:=16);
   Port (A:in std_logic_vector(N-1 downto 0);
         B:in std_logic_vector(N-1 downto 0);
-        Immed: in std_logic_vector( N-1 downto 0);
-        Zero: out std_logic; 
-        Carry: out std_logic;
         Q:out std_logic_vector(N-1 downto 0);
         op:in std_logic_vector(3 downto 0)
         );
@@ -26,36 +22,20 @@ signal s_and:  std_logic_vector(N-1 downto 0) := (others =>'0');
 signal s_or:   std_logic_vector(N-1 downto 0) := (others =>'0');
 signal s_xor:  std_logic_vector(N-1 downto 0) := (others =>'0');
 signal s_not:  std_logic_vector(N-1 downto 0) := (others =>'0');
-signal s_shr:  std_logic_vector(N-1 downto 0) := (others =>'0');
-signal s_shl:  std_logic_vector(N-1 downto 0) := (others =>'0');
-signal s_ror:  std_logic_vector(N-1 downto 0) := (others =>'0');
-signal s_rol:  std_logic_vector(N-1 downto 0) := (others =>'0');
-signal s_cmp:  std_logic_vector(N-1 downto 0) := (others =>'0');
 
 begin
 
--- A = Rm = r0,  = B = Rn = r1
--- CMP when 0000
-Zero <= '1' when (A = B ) else '0';  -- Flag
-Carry <= '1' when (A < B) else '0';  -- Flag
-
 with op select
 
-result <= --s_cmp   when "0000",
-          s_add   when "0100",
+result <= s_add   when "0100",
           s_sub   when "0101",
           s_mul(N-1 downto 0)   when "0110",
           s_and   when "0111",
           s_or    when "1000",
           s_not   when "1001",
           s_xor   when "1010",
-          s_shr   when "1011",
-          s_shl   when "1100",
-          s_ror   when "1101",
-          s_rol   when "1110",
-          
           result  when others;
-          
+
 s_add <= A + B;
 s_sub <= A - B;
 s_mul <= A * B;
@@ -63,10 +43,6 @@ s_and <= A and B;
 s_or <= A or B;
 s_xor <= A xor B;
 s_not <= not A;
-s_shr <= shr(A, Immed);
-s_shl <= shl(A, Immed);
-s_ror <= A(0) & A(N-1 downto 1);
-s_rol <= A( n-2 downto 0) & a(N-1);
 
 Q <= result;
 

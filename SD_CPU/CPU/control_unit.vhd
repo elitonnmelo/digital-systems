@@ -3,18 +3,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity control_unit is
-Generic (N: integer:=16;
-         VAL: integer:=2);
+Generic (N:integer := 16);
 Port ( clk : in std_logic;
        reset : in std_logic;
-       zero: in std_logic;
-       carry: in std_logic; 
-       instruction:  inout std_logic_vector(N-1 downto 0); -- instruction vindo da fsm
        ROM_en  : out std_logic :='0';                 -- lê memória de programa
        ROM_addr : out std_logic_vector(N-1 downto 0); -- Endereço da memória de programa
-       IR_data : inout std_logic_vector (N-1 downto 0);  -- instrução
-       rom_dout : in std_logic_vector (N-1 downto 0);  -- instrução
-       Immed   : inout std_logic_vector (N-1 downto 0); --valor imediato
+       IR_data : in std_logic_vector (N-1 downto 0);  -- instrução
+       Immed   : out std_logic_vector (N-1 downto 0); --valor imediato
        RAM_sel :out std_logic;                        -- seleciona fonte de dados da RAM
        RAM_we  :out std_logic:='0';                   -- habilita escrita na RAM
        RF_sel  : out std_logic_vector (1 downto 0);   -- seleciona fonte de dados do RF
@@ -23,13 +18,10 @@ Port ( clk : in std_logic;
        Rm_sel  : out std_logic_vector (2 downto 0);   -- seleciona Rm
        Rn_sel  : out std_logic_vector (2 downto 0);   -- seleciona Rn
        Ula_Op  : out std_logic_vector (3 downto 0);    -- seleciona operação da ULA
-       io_we   : out std_logic;
-       io_en   : out std_logic;
        
        --Debug
-       dbg_ir: inout std_logic_vector(N-1 downto 0);
-       dbg_state: out std_logic_vector(3 downto 0);
-       operation_label : out  string(1 to 3)
+       dbg_ir: out std_logic_vector(N-1 downto 0);
+       dbg_state: out std_logic_vector(3 downto 0)
       );
 
 end control_unit;
@@ -41,10 +33,6 @@ signal s_pc_clr  : std_logic;
 signal s_pc_din :std_logic_vector(N-1 downto 0);
 signal s_pc_dout :std_logic_vector(N-1 downto 0);
 signal s_pc_inc  : std_logic;
---signal s_zero  : std_logic;
---signal s_carry  : std_logic;
---signal s_immed :std_logic_vector(N-1 downto 0);
-signal s_jump_en: std_logic;
 
 -- IR
 signal s_ir_ld   : std_logic;
@@ -60,7 +48,6 @@ begin
 controlador: entity work.controller_FSM
        port map ( clk => clk,
                   reset => reset, 
-                  instruction_Ram => instruction,
                   PC_clr => s_pc_clr,
                   PC_inc => s_pc_inc,
                   ROM_en => ROM_en,
@@ -75,12 +62,7 @@ controlador: entity work.controller_FSM
                   Rm_sel => Rm_sel,
                   Rn_sel => Rn_sel,
                   ula_op => Ula_Op,
-                  jump_en => s_jump_en,
-                  io_we   => io_we, 
-                  io_en   => io_en, 
-                  
-                  dbg_state => dbg_state,
-                  operation_label => operation_label
+                  dbg_state => dbg_state
                   );
 
 IR: entity work.registrador 
@@ -99,19 +81,14 @@ PC: entity work.registrador
              d=>s_pc_din,
              q=>s_pc_dout);
 
-s_ir_din <= rom_dout;
+INC_PC: entity work.constant_adder
+         generic map(N=>16, VAL=>1)
+         port map  (I0 => s_pc_dout,
+                    O0 => s_pc_din);
+                
+             
 
-IR_data <= s_ir_dout;
-
-s_pc_din <=    (s_pc_dout + 0 + Immed) when (IR_data(N-1 downto 11) = "00001" and IR_data(1 downto 0) = "00" and s_jump_en = '1') else                                 --JMP
-               (s_pc_dout + 0 + Immed) when (IR_data(N-1 downto 11) = "00001" and IR_data(1 downto 0) = "01" and zero = '1' and carry = '0' and s_jump_en = '1') else  --JEQ
-               (s_pc_dout + 0 + Immed) when (IR_data(N-1 downto 11) = "00001" and IR_data(1 downto 0) = "10" and zero = '0' and carry = '1' and s_jump_en = '1') else  --JLT
-               (s_pc_dout + 0 + Immed) when (IR_data(N-1 downto 11) = "00001" and IR_data(1 downto 0) = "11" and zero = '0' and carry = '0' and s_jump_en = '1') else  --JGT  
-                s_pc_dout + VAL when s_jump_en = '0'else
-                s_pc_dout;
-
-
+s_ir_din <= IR_data;
 ROM_addr <= s_pc_dout;
-
-   
+dbg_ir <= s_ir_dout;    
 end Behavioral;

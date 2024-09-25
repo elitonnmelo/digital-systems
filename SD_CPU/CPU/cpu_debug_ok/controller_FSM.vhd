@@ -7,13 +7,12 @@ entity controller_FSM is
 Generic (N:Integer:=16);
 Port ( clk     : in std_logic;                        -- clk
        reset   : in std_logic;                        -- reset
-       instruction_Ram: inout  std_logic_vector(N-1 downto 0);    --  Carrega a instruction
        PC_clr  : out std_logic;                       -- limpa PC
        PC_inc  : out std_logic;                       -- incrementa PC
        ROM_en  : out std_logic :='0';                 -- lê memória de programa
        IR_ld   : out std_logic;                       -- load IR
        IR_data : in std_logic_vector (N-1 downto 0);  -- instrução
-       immed   : inout std_logic_vector (N-1 downto 0); --valor imediato
+       immed   : out std_logic_vector (N-1 downto 0); --valor imediato
        
        RAM_sel :out std_logic;                        -- seleciona fonte de dados da RAM
        RAM_we  :out std_logic:='0';                   -- habilita escrita na RAM
@@ -25,15 +24,8 @@ Port ( clk     : in std_logic;                        -- clk
        Rn_sel  : out std_logic_vector (2 downto 0);   -- seleciona Rn
        ula_op  : out std_logic_vector (3 downto 0);    -- seleciona operação da ULA
        
-       jump_en  : out std_logic;    -- seleciona quala opercacao de jump (JMP: 00, JEQ: 01, JLT: 1, JGT: 11)
---       input   : out std_logic_vector(N-1 downto 0);
-       io_we   : out std_logic;
-       io_en   : out std_logic;
-       
        --Debug
-       dbg_state: out std_logic_vector(3 downto 0);
-       operation_label : out  string(1 to 3)
-       
+       dbg_state: out std_logic_vector(3 downto 0)
        );    
 
 end controller_FSM;
@@ -42,7 +34,7 @@ architecture Behavioral of controller_FSM is
 
 --Estados da FSM
 type state_type is (init,fetch,decode,
-                   exec_nop, exec_halt, exec_mov, exec_load, exec_store, exec_ula, exec_jump, exec_io, exec_stack );  
+                   exec_nop, exec_halt, exec_mov, exec_load, exec_store, exec_ula);  
 
 
 -- Estado atual e próximo
@@ -54,8 +46,6 @@ signal instruction : std_logic_vector (N-1 downto 0);
 
 --Debug 
 signal s_dbg_state: std_logic_vector(3 downto 0);
---signal operation_label : string(1 to 8) := "NOP     ";  -- Inicializa com "NOP" por padrão
-
 
 begin
 
@@ -107,12 +97,9 @@ begin
       Rm_sel <= "000";
       Rn_sel <= "000";
       ula_op <= "0000";
-      jump_en <= '0';
-      io_we <= '0';
-      io_en <= '0';
+      
       s_dbg_state <="0000";
       --lógica de transição
-      operation_label <= "FET";
       next_s   <= decode;
      
     when decode =>
@@ -130,11 +117,7 @@ begin
       Rm_sel <= "000";
       Rn_sel <= "000";
       ula_op <= "0000";
-      jump_en <= '0';
-      io_we <= '0';
-      io_en <= '0';
-
-      operation_label <= "DEC";
+      
       s_dbg_state <="0001";
       
       --lógica de transição
@@ -142,14 +125,6 @@ begin
         next_s   <= exec_nop;
       elsif (instruction(15 downto 0) = "1111111111111111") then
         next_s   <= exec_halt;
-      elsif (instruction(15 downto 12) = "0000" and instruction(1 downto 0) = "11") then --T2
-        next_s   <= exec_ula;
-      elsif (instruction(15 downto 11) = "00001") then --T2
-        next_s   <= exec_jump;
-      elsif (instruction(15 downto 11) = "00000") then --T2
-        next_s   <= exec_stack;
-      elsif (instruction(15 downto 12) = "1111" ) then -- T2
-         next_s   <= exec_io; 
       elsif (instruction(15 downto 12) = "0001") then
         next_s   <= exec_mov;
       elsif (instruction(15 downto 12) = "0010") then
@@ -168,13 +143,7 @@ begin
         next_s   <= exec_ula;
       elsif (instruction(15 downto 12) = "1001") then
         next_s   <= exec_ula;
-      elsif (instruction(15 downto 12) = "1011") then -- T2
-         next_s   <= exec_ula;
-      elsif (instruction(15 downto 12) = "1100") then -- T2
-         next_s   <= exec_ula;
-      elsif (instruction(15 downto 12) = "1101") then -- T2
-         next_s   <= exec_ula;
-      elsif (instruction(15 downto 12) = "1110") then -- T2
+      elsif (instruction(15 downto 12) = "1010") then
          next_s   <= exec_ula;
       else
         next_s   <= exec_nop;    
@@ -183,12 +152,10 @@ begin
       
     when exec_nop =>
       next_s <= fetch;
-      operation_label <= "NOP";
       s_dbg_state <="0010";
        
     when exec_halt =>
       next_s <= exec_halt;
-      operation_label <= "HAL";
       s_dbg_state <="0011";
       
     -- Rd = Rm ou Rd = #Im  
@@ -199,7 +166,6 @@ begin
       Rd_sel <= instruction(10 downto 8);
       RF_sel <= instruction(11) & '0';
       Rd_wr  <= '1';
-      operation_label <= "MOV";
       s_dbg_state <="0100";
       --lógica de transição
       next_s <= fetch;
@@ -212,7 +178,6 @@ begin
       Rm_sel <= instruction(7 downto 5);
       RAM_sel <= instruction(11);
       RAM_we  <= '1';
-      operation_label <= "STR";
       
       s_dbg_state <="0110"; 
       --lógica de transição
@@ -225,7 +190,6 @@ begin
     Rm_sel <= instruction(7 downto 5);
     RF_sel <= "01";
     Rd_wr  <= '1';
-    operation_label <= "LOD";
     s_dbg_state <="0101";
     --lógica de transição
     next_s <= fetch;
@@ -239,51 +203,16 @@ begin
     ula_op <= instruction(15 downto 12);
     RF_sel <= "11";
     Rd_wr  <= '1';
-    operation_label <= "ULA";
     s_dbg_state <="0111";
     --lógica de transição
-    next_s <= fetch;
-    
-    -- PC = PC + immed
-    when exec_jump =>
-    PC_inc   <= '1';
-    ROM_en <= '1';
-    immed <= "0000000" & instruction( 10 downto 2);
-    jump_en <= '1';
-    operation_label <= "JMP";
-    s_dbg_state <= "1000";
-    
-    next_s <= fetch;
-    
-   when exec_io =>
-    Rd_sel <= instruction(10 downto 8);
-    Rm_sel <= instruction(7 downto 5);
-    io_we <= '1';
-    io_en <= '1';
-    operation_label <= "I/O";
-    next_s <= fetch; 
-    
-    when exec_stack => 
-    
-    Rn_sel <= instruction(4 downto 2); 
-    Rd_sel <= instruction(10 downto 8);
-    RAM_sel  <= '0';
-    RAM_we   <= '1';  
-    RF_sel   <= "01";
-    Rd_wr  <= '1';
-    operation_label <= "STK";
-    
     next_s <= fetch;
     
   end case;
 end process;
 
-
 instruction <= IR_data;
-instruction_Ram <= instruction;
 
 --debug
---fsm_operation_label <= operation_label;
 dbg_state <= s_dbg_state;
 
 end Behavioral;

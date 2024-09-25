@@ -16,7 +16,7 @@ signal tb_clk : std_logic := '0'; -- deve ser inicializado
 signal tb_rst : std_logic;
 
  signal ROM_en  :  std_logic :='0';             
- signal ROM_addr : std_logic_vector(N-1 downto 0); 
+ --signal ROM_addr : std_logic_vector(N-1 downto 0); 
  signal IR_data : std_logic_vector (N-1 downto 0);
                                             
  --Memória dados                            
@@ -36,6 +36,7 @@ signal dbg_r6: std_logic_vector(N-1 downto 0);
 signal dbg_r7: std_logic_vector(N-1 downto 0);
 signal dbg_ir: std_logic_vector(N-1 downto 0);
 signal dbg_state: std_logic_vector(3 downto 0);
+signal operation_label :  string(1 to 3);
 
 begin
 
@@ -44,13 +45,13 @@ DUT: entity work.cpu
      port map( clk       =>   tb_clk,
                rst       =>   tb_rst,
                --ROM_en    =>   ROM_en,
-               ROM_addr  =>   ROM_addr,
+               --ROM_addr  =>   ROM_addr,--
                --IR_data   =>   IR_data,
            
                --ram_din   =>  ram_din,
                --ram_dout  =>  ram_dout, 
-               ram_addr  =>  ram_addr,
-               RAM_we    =>  RAM_we,   
+--               ram_addr  =>  ram_addr, --
+--               RAM_we    =>  RAM_we,   --
             
                dbg_r0    =>  dbg_r0,   
                dbg_r1    =>  dbg_r1,   
@@ -61,7 +62,8 @@ DUT: entity work.cpu
                dbg_r6    =>  dbg_r6,   
                dbg_r7    =>  dbg_r7,   
                dbg_ir    =>  dbg_ir,   
-               dbg_state =>  dbg_state
+               dbg_state =>  dbg_state,
+               operation_label => operation_label
                    
                );
 
@@ -72,7 +74,7 @@ reset:
 process
        begin
          tb_rst <= '1';
-         wait for 2*PERIOD;
+         wait for 1*PERIOD;
          tb_rst <= '0';
          wait for 200*PERIOD;
       

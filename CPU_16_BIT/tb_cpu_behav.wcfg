@@ -10,30 +10,48 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="368.501 ns"></ZoomEndTime>
-      <Cursor1Time time="300.000 ns"></Cursor1Time>
+      <ZoomStartTime time="1,816.694 ns"></ZoomStartTime>
+      <ZoomEndTime time="2,083.695 ns"></ZoomEndTime>
+      <Cursor1Time time="1,995.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="177"></NameColumnWidth>
-      <ValueColumnWidth column_width="85"></ValueColumnWidth>
+      <NameColumnWidth column_width="168"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="29" />
    <wvobject type="logic" fp_name="/tb_cpu/tb_clk">
       <obj_property name="ElementShortName">tb_clk</obj_property>
       <obj_property name="ObjectShortName">tb_clk</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_cpu/tb_rst">
-      <obj_property name="ElementShortName">tb_rst</obj_property>
-      <obj_property name="ObjectShortName">tb_rst</obj_property>
+   <wvobject type="array" fp_name="/tb_cpu/operation_label">
+      <obj_property name="ElementShortName">operation_label[1:3]</obj_property>
+      <obj_property name="ObjectShortName">operation_label[1:3]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_cpu/ROM_en">
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/MEMORY_ROM/ROM_en">
       <obj_property name="ElementShortName">ROM_en</obj_property>
       <obj_property name="ObjectShortName">ROM_en</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_cpu/ROM_addr">
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/Control_Unit_0/s_jump_en">
+      <obj_property name="ElementShortName">s_jump_en</obj_property>
+      <obj_property name="ObjectShortName">s_jump_en</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/MEMORY_ROM/ROM_addr">
       <obj_property name="ElementShortName">ROM_addr[15:0]</obj_property>
       <obj_property name="ObjectShortName">ROM_addr[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/Control_Unit_0/s_pc_dout">
+      <obj_property name="ElementShortName">s_pc_dout[15:0]</obj_property>
+      <obj_property name="ObjectShortName">s_pc_dout[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#808080</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/Control_Unit_0/s_ir_din">
+      <obj_property name="ElementShortName">s_ir_din[15:0]</obj_property>
+      <obj_property name="ObjectShortName">s_ir_din[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/Control_Unit_0/s_ir_dout">
+      <obj_property name="ElementShortName">s_ir_dout[15:0]</obj_property>
+      <obj_property name="ObjectShortName">s_ir_dout[15:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_cpu/DUT/Control_Unit_0/IR_data">
       <obj_property name="ElementShortName">IR_data[15:0]</obj_property>
@@ -43,17 +61,39 @@
       <obj_property name="ElementShortName">ram_din[15:0]</obj_property>
       <obj_property name="ObjectShortName">ram_din[15:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_cpu/DUT/MEMORY_RAM/ram_dout">
-      <obj_property name="ElementShortName">ram_dout[15:0]</obj_property>
-      <obj_property name="ObjectShortName">ram_dout[15:0]</obj_property>
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/MEMORY_RAM/RAM_we">
+      <obj_property name="ElementShortName">RAM_we</obj_property>
+      <obj_property name="ObjectShortName">RAM_we</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_cpu/ram_addr">
+   <wvobject type="array" fp_name="/tb_cpu/DUT/MEMORY_RAM/ram_addr">
       <obj_property name="ElementShortName">ram_addr[15:0]</obj_property>
       <obj_property name="ObjectShortName">ram_addr[15:0]</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/tb_cpu/RAM_we">
-      <obj_property name="ElementShortName">RAM_we</obj_property>
-      <obj_property name="ObjectShortName">RAM_we</obj_property>
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/Control_Unit_0/controlador/io_en">
+      <obj_property name="ElementShortName">io_en</obj_property>
+      <obj_property name="ObjectShortName">io_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/ES/IO_we">
+      <obj_property name="ElementShortName">IO_we</obj_property>
+      <obj_property name="ObjectShortName">IO_we</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/ES/INPUT">
+      <obj_property name="ElementShortName">INPUT[15:0]</obj_property>
+      <obj_property name="ObjectShortName">INPUT[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/ES/OUTPUT">
+      <obj_property name="ElementShortName">OUTPUT[15:0]</obj_property>
+      <obj_property name="ObjectShortName">OUTPUT[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_cpu/DUT/MEMORY_RAM/STACK">
+      <obj_property name="ElementShortName">STACK[3:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">STACK[3:0][15:0]</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_cpu/DUT/MEMORY_RAM/sp">
+      <obj_property name="ElementShortName">sp</obj_property>
+      <obj_property name="ObjectShortName">sp</obj_property>
+      <obj_property name="CustomSignalColor">#008080</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_cpu/dbg_r0">
       <obj_property name="ElementShortName">dbg_r0[15:0]</obj_property>
@@ -62,6 +102,8 @@
    <wvobject type="array" fp_name="/tb_cpu/dbg_r1">
       <obj_property name="ElementShortName">dbg_r1[15:0]</obj_property>
       <obj_property name="ObjectShortName">dbg_r1[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_cpu/dbg_r2">
       <obj_property name="ElementShortName">dbg_r2[15:0]</obj_property>
@@ -70,6 +112,8 @@
    <wvobject type="array" fp_name="/tb_cpu/dbg_r3">
       <obj_property name="ElementShortName">dbg_r3[15:0]</obj_property>
       <obj_property name="ObjectShortName">dbg_r3[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_cpu/dbg_r4">
       <obj_property name="ElementShortName">dbg_r4[15:0]</obj_property>
@@ -78,6 +122,8 @@
    <wvobject type="array" fp_name="/tb_cpu/dbg_r5">
       <obj_property name="ElementShortName">dbg_r5[15:0]</obj_property>
       <obj_property name="ObjectShortName">dbg_r5[15:0]</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_cpu/dbg_r6">
       <obj_property name="ElementShortName">dbg_r6[15:0]</obj_property>
@@ -86,21 +132,19 @@
    <wvobject type="array" fp_name="/tb_cpu/dbg_r7">
       <obj_property name="ElementShortName">dbg_r7[15:0]</obj_property>
       <obj_property name="ObjectShortName">dbg_r7[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_cpu/dbg_ir">
-      <obj_property name="ElementShortName">dbg_ir[15:0]</obj_property>
-      <obj_property name="ObjectShortName">dbg_ir[15:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/tb_cpu/dbg_state">
-      <obj_property name="ElementShortName">dbg_state[3:0]</obj_property>
-      <obj_property name="ObjectShortName">dbg_state[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="other" fp_name="/tb_cpu/N">
-      <obj_property name="ElementShortName">N</obj_property>
-      <obj_property name="ObjectShortName">N</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="other" fp_name="/tb_cpu/PERIOD">
       <obj_property name="ElementShortName">PERIOD</obj_property>
       <obj_property name="ObjectShortName">PERIOD</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/Datapath_0/ULA/Zero">
+      <obj_property name="ElementShortName">Zero</obj_property>
+      <obj_property name="ObjectShortName">Zero</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_cpu/DUT/Datapath_0/ULA/Carry">
+      <obj_property name="ElementShortName">Carry</obj_property>
+      <obj_property name="ObjectShortName">Carry</obj_property>
    </wvobject>
 </wave_config>

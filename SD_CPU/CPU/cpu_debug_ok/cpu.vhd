@@ -14,6 +14,17 @@ entity cpu is
   Generic (N:integer :=16); 
   Port (clk : in STD_LOGIC;
         rst : in STD_LOGIC;
+        
+        --Memória de programa
+        ROM_en  : out std_logic :='0';                
+        ROM_addr : out std_logic_vector(N-1 downto 0);
+        IR_data : in std_logic_vector (N-1 downto 0);
+        
+        --Memória dados
+        ram_din: in std_logic_vector(N-1 downto 0);
+        ram_dout: out std_logic_vector(N-1 downto 0);
+        ram_addr: out std_logic_vector(N-1 downto 0);
+        RAM_we  :out std_logic;
 
         --Debug
         dbg_r0: out std_logic_vector(N-1 downto 0);
@@ -24,9 +35,8 @@ entity cpu is
         dbg_r5: out std_logic_vector(N-1 downto 0);
         dbg_r6: out std_logic_vector(N-1 downto 0);
         dbg_r7: out std_logic_vector(N-1 downto 0);
-        dbg_ir: inout std_logic_vector(N-1 downto 0);
-        dbg_state: out std_logic_vector(3 downto 0);
-        operation_label : out  string(1 to 3)
+        dbg_ir: out std_logic_vector(N-1 downto 0);
+        dbg_state: out std_logic_vector(3 downto 0)
         
         );
 end cpu;
@@ -43,7 +53,6 @@ signal s_Rn_sel: std_logic_vector(2 downto 0);
 signal s_ROM_en  :  std_logic :='0';                
 signal s_ROM_addr :  std_logic_vector(N-1 downto 0);
 signal s_IR_data :  std_logic_vector (N-1 downto 0);
-signal s_rom_dout:  std_logic_vector(N-1 downto 0);
         
 --Memória dados
 signal s_ram_din:  std_logic_vector(N-1 downto 0);
@@ -51,24 +60,12 @@ signal s_ram_dout:  std_logic_vector(N-1 downto 0);
 signal s_ram_addr:  std_logic_vector(N-1 downto 0);
 signal s_RAM_we  : std_logic;
 
---IO
-signal s_io_din:  std_logic_vector(N-1 downto 0);
-signal s_io_dout:  std_logic_vector(N-1 downto 0);
-signal s_io_addr:  std_logic_vector(N-1 downto 0);
-signal s_io_we  : std_logic;
-signal s_io_en  : std_logic;
-
---instruction
-signal s_instruction:  std_logic_vector(N-1 downto 0);
 
 --ULA         
 signal s_ula_op: std_logic_vector(3 downto 0);
 
 --RF Source
 signal s_immediate: std_logic_vector(N-1 downto 0);
-signal s_zero: std_logic;
-signal s_carry: std_logic;
-
 signal s_RF_source: std_logic_vector(1 downto 0);
 
 --Mux
@@ -82,13 +79,9 @@ Control_Unit_0:
      generic map (N =>16)
      port map ( clk => clk,
        reset    => rst,
-       zero     => s_zero,
-       carry    => s_carry,
-       instruction => s_instruction,
        ROM_en   => s_ROM_en,
        ROM_addr => s_ROM_addr,
        IR_data  => s_IR_data,
-       rom_dout => s_rom_dout,
        Immed    => s_immediate,
        RAM_sel  => s_RAM_sel,
        RAM_we   => s_RAM_we,
@@ -98,11 +91,8 @@ Control_Unit_0:
        Rm_sel   => s_Rm_sel,
        Rn_sel   => s_Rn_sel,
        Ula_Op   => s_ula_op,
-       io_we => s_io_we,
-       io_en   => s_io_en,
        dbg_ir   => dbg_ir,
-       dbg_state => dbg_state,
-       operation_label => operation_label
+       dbg_state => dbg_state
        );
 
            
@@ -124,12 +114,8 @@ Datapath_0:
                 ram_addr  => s_ram_addr,
                 ram_dout  => s_ram_dout,
                 immediate => s_immediate,
-                zero      => s_zero,
-                carry     => s_carry,
                 RF_source => s_RF_source,
                 RAM_sel   => s_RAM_sel,
-                io_en   => s_io_en,
-                io_dout   => s_io_dout,
                 dbg_r0 => dbg_r0,
                 dbg_r1 => dbg_r1,
                 dbg_r2 => dbg_r2,
@@ -140,36 +126,16 @@ Datapath_0:
                 dbg_r7 => dbg_r7
                 );
 
-MEMORY_RAM:
-  entity work.RAM
-    generic map (N => 16)
-    port map( clk => clk,
-              RAM_we => s_RAM_we,
-              ram_addr => s_ram_addr,
-              ram_din => s_ram_din,
-              ram_dout => s_ram_dout,
-              instruction => s_instruction
-              );
-              
-MEMORY_ROM:
-  entity work.ROM
-    generic map (N => 16)
-    port map( clk => clk,
-              ROM_addr => s_ROM_addr,
-              ROM_en => s_ROM_en,  
-              ROM_dout => s_rom_dout 
-              );
-              
-              
-ES:
-  entity work.en_sa
-    generic map(N => 16)
-    port map( clk => clk,
-              IO_we  => s_io_we,
-              IO_addr => s_ram_addr,
-              INPUT  => s_ram_din,
-              OUTPUT => s_io_dout
-              );
+
+ROM_en <= s_ROM_en;                
+ROM_addr <= s_ROM_addr; 
+s_IR_data <= IR_data; 
+        
+
+s_ram_din <= ram_din;
+ram_dout <= s_ram_dout;
+ram_addr <= s_ram_addr;
+RAM_we <= s_RAM_we;
 
 
 end Behavioral;
